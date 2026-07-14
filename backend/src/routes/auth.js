@@ -67,10 +67,10 @@ router.post(
     const { email, password } = req.body;
 
     const user = await User.findOne({ email }).select("+passwordHash");
-    if (!user) throw ApiError.unauthorized("Invalid credentials");
+    if (!user) throw ApiError.unauthorized("wrong email! ");
 
     const ok = await user.comparePassword(password);
-    if (!ok) throw ApiError.unauthorized("Invalid credentials");
+    if (!ok) throw ApiError.unauthorized("wrong password! ");
 
     issueSession(res, user);
     res.json({ user });
