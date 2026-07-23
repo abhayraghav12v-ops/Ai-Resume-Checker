@@ -3,54 +3,54 @@ import { Star } from "lucide-react";
 import { SectionHeader } from "./FeaturesSection";
 
 const TESTIMONIALS = [
-  {
-    quote:
-      "I'd been ghosted by 40+ companies. Ran my resume through Roaster, fixed 6 issues, and landed 3 onsites in two weeks.",
-    name: "Priya Raman",
-    role: "Senior Frontend Engineer",
-    company: "Stripe",
-    initials: "PR",
-  },
-  {
-    quote:
-      "The rewrites actually sound like me. No 'leveraged' or 'spearheaded' garbage. My ATS score jumped from 58 to 89.",
-    name: "Marcus Chen",
-    role: "Backend Engineer",
-    company: "Vercel",
-    initials: "MC",
-  },
-  {
-    quote:
-      "As a new grad, I had no idea recruiters were filtering me out before a human saw the resume. Brutal — but fixable in one afternoon.",
-    name: "Sofia Ruiz",
-    role: "CS Senior, UIUC",
-    company: "intern @ Linear",
-    initials: "SR",
-  },
-  {
-    quote:
-      "I wish this existed when I switched from full-stack to ML. Keyword optimization alone was worth the signup.",
-    name: "Daniel Park",
-    role: "ML Engineer",
-    company: "Anthropic",
-    initials: "DP",
-  },
-  {
-    quote:
-      "The diff view is what sold me. I could see exactly what changed and why — not some black-box rewrite.",
-    name: "Aisha Hassan",
-    role: "Product Designer",
-    company: "Figma",
-    initials: "AH",
-  },
-  {
-    quote:
-      "Used it the night before applying to FAANG. Got my first response in 36 hours. Sample size of one, but I'll take it.",
-    name: "Jordan Blake",
-    role: "Full-Stack Developer",
-    company: "freelance",
-    initials: "JB",
-  },
+ {
+  quote:
+    "The resume analysis pointed out mistakes I had completely overlooked. After fixing them, my resume felt much more professional and recruiter-friendly.",
+  name: "Abhay Raghav",
+  role: "AI & ML Student",
+  company: "AKTU",
+  initials: "AR",
+},
+{
+  quote:
+    "The ATS suggestions were simple, practical, and easy to apply. I improved my resume score significantly in less than an hour.",
+  name: "Ashutosh Tiwari",
+  role: "Software Engineering Student",
+  company: "AKTU",
+  initials: "AT",
+},
+{
+  quote:
+    "I liked how every recommendation came with a clear explanation. It wasn't just changing words—it helped me understand what recruiters actually look for.",
+  name: "Gangaram Yadav",
+  role: "Full Stack Developer",
+  company: "Freelancer",
+  initials: "GY",
+},
+{
+  quote:
+    "The resume rewrite kept my writing style while making it much stronger. It gave me the confidence to apply for internships.",
+  name: "Himanshi Sharma",
+  role: "Frontend Developer",
+  company: "Student",
+  initials: "HS",
+},
+{
+  quote:
+    "The keyword optimization feature was the highlight for me. My resume became much more relevant for the roles I was targeting.",
+  name: "Shivam Rajpoot",
+  role: "Backend Developer",
+  company: "Open Source Contributor",
+  initials: "SR",
+},
+{
+  quote:
+    "The side-by-side comparison made every change easy to understand. It felt like getting feedback from an experienced recruiter.",
+  name: "Gagan Vardhan",
+  role: "Software Developer",
+  company: "Tech Enthusiast",
+  initials: "GV",
+},
 ];
 
 export function TestimonialsSection() {
