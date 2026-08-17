@@ -7,6 +7,9 @@ export const authApi = {
   login: (payload) =>
     apiClient.post("/auth/login", payload).then((r) => r.data),
 
+  googleLogin: (idToken) =>
+  apiClient.post("/auth/google", { idToken }).then((r) => r.data),
+
   logout: () =>
     apiClient.post("/auth/logout").then((r) => r.data),
 

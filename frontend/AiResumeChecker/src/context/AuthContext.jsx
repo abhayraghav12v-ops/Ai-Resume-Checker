@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { authApi } from "@/api/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/firebase";
 
 const AuthContext = createContext(null);
 
@@ -30,6 +32,20 @@ export function AuthProvider({ children }) {
     return user;
   }, []);
 
+  const googleLogin = useCallback(async () => {
+  const provider = new GoogleAuthProvider();
+
+  const result = await signInWithPopup(auth, provider);
+
+  const idToken = await result.user.getIdToken();
+
+  const { user } = await authApi.googleLogin(idToken);
+
+  setUser(user);
+
+  return user;
+}, []);
+
   const register = useCallback(async (payload) => {
     const { user } = await authApi.register(payload);
     setUser(user);
@@ -52,7 +68,7 @@ export function AuthProvider({ children }) {
   }, [queryClient]);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, refresh, updateProfile }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, refresh, updateProfile, googleLogin }}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,6 +2,7 @@ const express = require("express");
 const { z } = require("zod");
 
 const env = require("../config/env");
+const firebaseAdmin = require("../config/firebaseAdmin");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/ApiError");
 const { signToken, cookieOptions } = require("../utils/jwt");
@@ -21,6 +22,10 @@ const registerSchema = z.object({
 const loginSchema = z.object({
   email: z.string().trim().toLowerCase().email(),
   password: z.string().min(1).max(128),
+});
+
+const googleLoginSchema = z.object({
+  idToken: z.string().min(1),
 });
 
 const profileSchema = z.object({
@@ -73,6 +78,42 @@ router.post(
     if (!ok) throw ApiError.unauthorized("wrong password! ");
 
     issueSession(res, user);
+    res.json({ user });
+  }),
+);
+
+router.post(
+  "/google",
+  authLimiter,
+  validate(googleLoginSchema),
+  asyncHandler(async (req, res) => {
+    const { idToken } = req.body;
+
+    let decodedToken;
+
+    try {
+      decodedToken = await firebaseAdmin.verifyIdToken(idToken);
+    } catch {
+      throw ApiError.unauthorized("Invalid Google authentication");
+    }
+
+    const email = decodedToken.email?.toLowerCase();
+
+    if (!email || !decodedToken.email_verified) {
+      throw ApiError.unauthorized("Google email is not verified");
+    }
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name: decodedToken.name || "Google User",
+        email,
+      });
+    }
+
+    issueSession(res, user);
+
     res.json({ user });
   }),
 );

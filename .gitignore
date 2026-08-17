@@ -6,6 +6,9 @@ frontend/**/node_modules/
 backend/.env
 frontend/**/.env
 
+# Firebase private credentials
+firebase-service-account.json
+
 # Build
 frontend/**/dist/
 
