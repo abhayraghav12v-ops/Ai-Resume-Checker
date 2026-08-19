@@ -1,13 +1,7 @@
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis } from "recharts";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -17,7 +11,12 @@ import {
   TrendingDown,
   Minus,
 } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -30,7 +29,8 @@ function deltaIcon(delta) {
 
 function tierFor(score) {
   if (score >= 85) return { label: "Excellent", next: null };
-  if (score >= 70) return { label: "Strong", next: { label: "Excellent", at: 85 } };
+  if (score >= 70)
+    return { label: "Strong", next: { label: "Excellent", at: 85 } };
   if (score >= 55) return { label: "Fair", next: { label: "Strong", at: 70 } };
   return { label: "Needs work", next: { label: "Fair", at: 55 } };
 }
@@ -49,7 +49,7 @@ function VersionPill({ version, delta, isLatest }) {
         "flex-1 min-w-[120px] rounded-2xl p-4 border transition-shadow",
         isLatest
           ? "bg-[var(--accent-soft)] border-[var(--accent)]/30 shadow-card"
-          : "bg-[var(--surface-2)] border-[var(--border)]"
+          : "bg-[var(--surface-2)] border-[var(--border)]",
       )}
     >
       <div className="flex items-center justify-between mb-3">
@@ -58,7 +58,7 @@ function VersionPill({ version, delta, isLatest }) {
             "h-7 w-7 rounded-xl flex items-center justify-center",
             isUpload
               ? "bg-[var(--surface)] text-[var(--ink-muted)]"
-              : "bg-[var(--accent)] text-white"
+              : "bg-[var(--accent)] text-white",
           )}
         >
           <Icon size={13} />
@@ -84,7 +84,7 @@ function VersionPill({ version, delta, isLatest }) {
             delta > 0 && "bg-[var(--accent-soft)] text-[var(--success)]",
             delta < 0 && "bg-[#F8E3E0] text-[var(--danger)]",
             delta === 0 && "bg-[var(--surface)] text-[var(--ink-muted)]",
-            isLatest && delta > 0 && "bg-white text-[var(--success)]"
+            isLatest && delta > 0 && "bg-white text-[var(--success)]",
           )}
         >
           <DeltaIcon size={10} strokeWidth={2.5} />
@@ -160,8 +160,16 @@ function TrajectoryChart({ versions }) {
         </div>
       </div>
       <div className="h-[110px] -mx-1">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 4, right: 8, left: 8, bottom: 0 }}>
+        <ResponsiveContainer
+          width="100%"
+          height={110}
+          minWidth={0}
+          minHeight={110}
+        >
+          <AreaChart
+            data={data}
+            margin={{ top: 4, right: 8, left: 8, bottom: 0 }}
+          >
             <defs>
               <linearGradient id="vsTrajGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.3} />
@@ -181,7 +189,12 @@ function TrajectoryChart({ versions }) {
               stroke="var(--accent)"
               strokeWidth={2.5}
               fill="url(#vsTrajGrad)"
-              dot={{ r: 4, stroke: "var(--accent)", fill: "var(--surface)", strokeWidth: 2 }}
+              dot={{
+                r: 4,
+                stroke: "var(--accent)",
+                fill: "var(--surface)",
+                strokeWidth: 2,
+              }}
               activeDot={{ r: 5 }}
             />
           </AreaChart>
@@ -263,9 +276,11 @@ export function VersionStack({ versions, resumeId, resumeTitle }) {
             <div
               className={cn(
                 "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold tabular",
-                totalDelta > 0 && "bg-[var(--accent-soft)] text-[var(--success)]",
+                totalDelta > 0 &&
+                  "bg-[var(--accent-soft)] text-[var(--success)]",
                 totalDelta < 0 && "bg-[#F8E3E0] text-[var(--danger)]",
-                totalDelta === 0 && "bg-[var(--surface-2)] text-[var(--ink-muted)]"
+                totalDelta === 0 &&
+                  "bg-[var(--surface-2)] text-[var(--ink-muted)]",
               )}
             >
               <TotalDeltaIcon size={12} strokeWidth={2.5} />
