@@ -159,7 +159,7 @@ function TrajectoryChart({ versions }) {
           {versions[0].label} → {versions[versions.length - 1].label}
         </div>
       </div>
-      <div className="h-[110px] -mx-1">
+      <div className="h-[110px] w-full min-w-0 -mx-1">
         <ResponsiveContainer
           width="100%"
           height={110}
@@ -176,13 +176,16 @@ function TrajectoryChart({ versions }) {
                 <stop offset="100%" stopColor="var(--accent)" stopOpacity={0} />
               </linearGradient>
             </defs>
+
             <XAxis
               dataKey="label"
               tick={{ fontSize: 10, fill: "var(--ink-muted)" }}
               axisLine={false}
               tickLine={false}
             />
+
             <YAxis hide domain={[0, 100]} />
+
             <Area
               type="monotone"
               dataKey="score"
