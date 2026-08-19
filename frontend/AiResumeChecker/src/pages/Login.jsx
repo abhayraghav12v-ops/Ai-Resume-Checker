@@ -146,7 +146,7 @@ export default function Login() {
             type="button"
             onClick={onGoogleLogin}
             disabled={loading || googleLoading}
-            className="w-full h-11 rounded-xl border border-[var(--border)] bg-white text-[var(--ink)] font-semibold text-sm flex items-center justify-center gap-3 hover:bg-gray-50 transition disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full h-11 rounded-xl border border-[var(--border)] bg-white text-gray-800 font-semibold text-sm flex items-center justify-center gap-3 hover:bg-gray-50 transition disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {googleLoading ? (
               <>
@@ -181,7 +181,6 @@ export default function Login() {
                     d="M12 6.38c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.84 3.5 14.63 2.5 12 2.5a9.74 9.74 0 0 0-8.7 5.38l3.24 2.53C7.31 8.1 9.46 6.38 12 6.38Z"
                   />
                 </svg>
-
                 Continue with Google
               </>
             )}
