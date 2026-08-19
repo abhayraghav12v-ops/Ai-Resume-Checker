@@ -70,7 +70,7 @@ export default function Login() {
           <AILogo size={48} />
         </div>
 
-        <h1 className="font-display text-[34px] font-semibold tracking-tight text-[var(--ink)] leading-[1.05]">
+        <h1 className="font-display text-[34px] font-semibold tracking-tight text-gray-800 leading-[1.05]">
           Welcome back
         </h1>
 
@@ -141,7 +141,6 @@ export default function Login() {
             </div>
           </div>
 
-          {/* Google Login */}
           <button
             type="button"
             onClick={onGoogleLogin}
