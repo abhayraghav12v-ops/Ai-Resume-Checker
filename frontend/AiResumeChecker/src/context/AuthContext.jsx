@@ -1,7 +1,20 @@
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
+
 import { useQueryClient } from "@tanstack/react-query";
+
 import { authApi } from "@/api/auth";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+
 import { auth } from "@/firebase";
 
 const AuthContext = createContext(null);
@@ -9,6 +22,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const queryClient = useQueryClient();
 
   const refresh = useCallback(async () => {
@@ -28,33 +42,60 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (credentials) => {
     const { user } = await authApi.login(credentials);
+
     setUser(user);
+
     return user;
   }, []);
 
+  // Google LOGIN
   const googleLogin = useCallback(async () => {
-  const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
 
-  const result = await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(auth, provider);
 
-  const idToken = await result.user.getIdToken();
+    const idToken = await result.user.getIdToken();
 
-  const { user } = await authApi.googleLogin(idToken);
+    const { user } = await authApi.googleLogin(idToken);
 
-  setUser(user);
+    setUser(user);
 
-  return user;
-}, []);
+    return user;
+  }, []);
+
+  // Google REGISTER
+  const googleRegister = useCallback(async () => {
+    const provider = new GoogleAuthProvider();
+
+    // Always show Google account selection
+    provider.setCustomParameters({
+      prompt: "select_account",
+    });
+
+    const result = await signInWithPopup(auth, provider);
+
+    const idToken = await result.user.getIdToken();
+
+    const { user } = await authApi.googleRegister(idToken);
+
+    setUser(user);
+
+    return user;
+  }, []);
 
   const register = useCallback(async (payload) => {
     const { user } = await authApi.register(payload);
+
     setUser(user);
+
     return user;
   }, []);
 
   const updateProfile = useCallback(async (payload) => {
     const { user } = await authApi.updateProfile(payload);
+
     setUser(user);
+
     return user;
   }, []);
 
@@ -68,7 +109,19 @@ export function AuthProvider({ children }) {
   }, [queryClient]);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, refresh, updateProfile, googleLogin }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        login,
+        register,
+        logout,
+        refresh,
+        updateProfile,
+        googleLogin,
+        googleRegister,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -76,6 +129,10 @@ export function AuthProvider({ children }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
+
+  if (!ctx) {
+    throw new Error("useAuth must be used inside AuthProvider");
+  }
+
   return ctx;
 }

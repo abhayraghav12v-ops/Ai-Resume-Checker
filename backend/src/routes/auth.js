@@ -165,4 +165,44 @@ router.patch(
   }),
 );
 
+router.post(
+  "/google/register",
+  authLimiter,
+  validate(googleLoginSchema),
+  asyncHandler(async (req, res) => {
+    const { idToken } = req.body;
+
+    let decodedToken;
+
+    try {
+      decodedToken = await firebaseAdmin.verifyIdToken(idToken);
+    } catch {
+      throw ApiError.unauthorized("Invalid Google authentication");
+    }
+
+    const email = decodedToken.email?.toLowerCase();
+
+    if (!email || !decodedToken.email_verified) {
+      throw ApiError.unauthorized("Google email is not verified");
+    }
+
+    const existing = await User.findOne({ email });
+
+    if (existing) {
+      throw ApiError.conflict(
+        "Email already registered. Please sign in instead."
+      );
+    }
+
+    const user = await User.create({
+      name: decodedToken.name || "Google User",
+      email,
+    });
+
+    issueSession(res, user);
+
+    res.status(201).json({ user });
+  }),
+);
+
 module.exports = router;

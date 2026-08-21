@@ -8,13 +8,14 @@ export const authApi = {
     apiClient.post("/auth/login", payload).then((r) => r.data),
 
   googleLogin: (idToken) =>
-  apiClient.post("/auth/google", { idToken }).then((r) => r.data),
+    apiClient.post("/auth/google", { idToken }).then((r) => r.data),
 
-  logout: () =>
-    apiClient.post("/auth/logout").then((r) => r.data),
+  googleRegister: (idToken) =>
+    apiClient.post("/auth/google/register", { idToken }).then((r) => r.data),
 
-  me: () =>
-    apiClient.get("/auth/me").then((r) => r.data),
+  logout: () => apiClient.post("/auth/logout").then((r) => r.data),
+
+  me: () => apiClient.get("/auth/me").then((r) => r.data),
 
   updateProfile: (payload) =>
     apiClient.patch("/auth/profile", payload).then((r) => r.data),
